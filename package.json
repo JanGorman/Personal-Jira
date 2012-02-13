@@ -5,7 +5,8 @@
   "author": "Jan Gorman <gorman.jan@gmail.com>",
   "keywords": ["jira", "search", "backbone", "soap"],
   "dependencies": {
-    "vows": ">=0.5.3"
+    "vows": ">=0.5.3",
+    "soap": ""
   },
   "directories": {
     "lib": "./lib"
