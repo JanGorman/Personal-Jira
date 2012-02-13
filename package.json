@@ -6,7 +6,8 @@
   "keywords": ["jira", "search", "backbone", "soap"],
   "dependencies": {
     "vows": ">=0.5.3",
-    "soap": ""
+    "soap": "",
+    "bogart": ""
   },
   "directories": {
     "lib": "./lib"
