@@ -1,13 +1,9 @@
-var bogart = require('bogart');
+var express = require("express")
 
-var router = bogart.router();
+var app = express.createServer();
 
-router.get('/', function() {
-  return bogart.html('Hello World');
+app.get('/', function(req, res){
+    res.send('Hello World');
 });
 
-var app = bogart.app();
-app.use(bogart.batteries);
-app.use(router);
-
-app.start();
+app.listen(3000);

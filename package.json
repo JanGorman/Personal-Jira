@@ -7,7 +7,7 @@
   "dependencies": {
     "vows": ">=0.5.3",
     "soap": "",
-    "bogart": ""
+    "express": ""
   },
   "directories": {
     "lib": "./lib"

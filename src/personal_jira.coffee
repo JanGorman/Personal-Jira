@@ -1,12 +1,12 @@
-bogart = require 'bogart'
+bogart = require 'express'
 
 class PersonalJira
 
-  router = bogart.router();
+  app = express.createServer()
 
-  router.get '/', ->
-    bogart.html 'hello world'
+  app.get '/', (req, res) ->
+    res.send 'hello world'
 
-  bogart.start app
+  app.listen 3000
 
 module.exports = PersonalJira
