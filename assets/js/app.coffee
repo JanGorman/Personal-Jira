@@ -2,7 +2,11 @@ $ ->
   
   # Model
   Settings = Backbone.Model.extend
-    # defaults:
+    defaults:
+      id:       'settings'
+      username: 'private'
+      password: 'private'
+
     validation:
       username:
         required: true
@@ -19,7 +23,7 @@ $ ->
     
     initialize: ->
       this.fetch()
-      settings = this.get settingsId
+      settings = this.get this.settingsId
       if !settings
         settings = new Settings
         this.add settings
@@ -28,6 +32,11 @@ $ ->
   # View
   SettingsView = Backbone.View.extend
     el: $('#dialog_settings')
+    
+    events:
+      'click :button[type="submit"]': 'update'
+      'click :button[type="cancel"]': 'toggle'
+      'keypress :input': 'update'
 
     initialize: ->
       that = this
@@ -44,9 +53,16 @@ $ ->
     render: ->
       this.$el.modal()
       return this
+      
+    update: ->
+      console.log 'hi'
+      
+    toggle: ->
+      this.$el.modal 'toggle'
 
   # Wires
-  settingsView = new SettingsView
+  settingsCollection = new SettingsCollection
+  settingsView = new SettingsView model: settingsCollection.get settingsCollection.settingsId
   $('#settings').bind 'click', ->
     settingsView.render()
     return false
