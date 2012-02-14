@@ -3,8 +3,8 @@ head
   meta(charset='utf-8')
   title Personal Jira
   // CSS
+  != css('bootstrap.min')
   != css('app')
-  != css('bootstrap.min')  
   style
     body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -26,6 +26,53 @@ body
 
   .container
     != body
+
+  | <script type="text/template" id="filters-template">
+  | <div id="dialog_settings" class="modal hide fade">
+  |   <div class="modal-header">
+  |     <a class="close" data-dismiss="modal" >&times;</a>
+  |     <h3>Settings</h3>
+  |   </div>
+  |   <div class="modal-body">
+  |     <form method="get" accept-charset="utf-8">
+  |       <input type="hidden" name="id" id="id">
+  |       <fieldset>
+  |         <div class="control-group">
+  |           <label class="control-label" for="jira_project">Project</label>
+  |           <div class="controls">
+  |             <div class="input-prepend">
+  |               <span class="add-on"><i class="icon-list-alt"></i></span>
+  |               <input type="text" name="project" id="project">
+  |             </div>
+  |           </div>
+  |         </div>
+  |         <div class="control-group">
+  |           <label for="jira_user_name">Username</label>
+  |           <div class="controls">
+  |             <div class="input-prepend">
+  |               <span class="add-on"><i class="icon-user"></i></span>
+  |               <input type="text" name="username" id="username">
+  |             </div>
+  |           </div>
+  |         </div>
+  |         <div class="control-group">
+  |           <label for="jira_password">Password</label>
+  |           <div class="controls">
+  |             <div class="input-prepend">
+  |               <span class="add-on"><i class="icon-lock"></i></span>
+  |               <input type="password" name="password" id="password">
+  |             </div>
+  |           </div>
+  |         </div>
+  |       </fieldset>
+  |     </form>
+  |   </div>
+  |   <div class="modal-footer">
+  |     <button type="submit" class="btn btn-primary"><i class="icon-ok"></i> Save</button>
+  |     <button type="cancel" class="btn"><i class="icon-remove"></i> Cancel</button>
+  |   </div>
+  | </div>
+  | </script>
 
   != js('http://cdnjs.cloudflare.com/ajax/libs/jquery/1.7/jquery.min.js')
   != js('bootstrap.min')
