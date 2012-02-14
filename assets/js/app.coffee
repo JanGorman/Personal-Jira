@@ -20,6 +20,9 @@ $ ->
         minLength: 1
       # releases:
       #   required: true
+    
+    can_access_jira: ->
+      return project != '' and username != '' and password != ''
   
   # Collection
   SettingsCollection = Backbone.Collection.extend
@@ -85,6 +88,10 @@ $ ->
   # Wires
   settingsCollection = new SettingsCollection
   model = settingsCollection.get settingsCollection.settingsId
+  
+  # Poll jira for releases
+  if model.can_access_jira
+    console.log 'hi'
 
   settingsView = new SettingsView model: model
   $('#settings').bind 'click', ->
