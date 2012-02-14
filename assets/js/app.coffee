@@ -4,18 +4,22 @@ $ ->
   Settings = Backbone.Model.extend
     defaults:
       id:       'settings'
+      project:  ''
       username: ''
       password: ''
 
     validation:
+      project:
+        required: true
+        minLength: 1
       username:
         required: true
         minLength: 1
       password:
         required: true
         minLength: 1
-      releases:
-        required: true
+      # releases:
+      #   required: true
   
   # Collection
   SettingsCollection = Backbone.Collection.extend
@@ -63,6 +67,7 @@ $ ->
       
     update: ->
       this.model.save(
+        project:  this.$el.find('input[name="project"]').val()
         username: this.$el.find('input[name="username"]').val()
         password: this.$el.find('input[name="password"]').val()
       )

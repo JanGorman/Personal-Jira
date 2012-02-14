@@ -35,6 +35,13 @@ body
       div.modal-body
         fieldset
           div.control-group
+            label.control-label(for='project') Project
+            div.controls
+              div.input-prepend
+                span.add-on
+                  i.icon-heart
+                input(type='text', name='project')
+          div.control-group
             label.control-label(for='username') Username
             div.controls
               div.input-prepend
@@ -56,7 +63,7 @@ body
           i.icon-remove
           | Cancel
 
-  != js('http://cdnjs.cloudflare.com/ajax/libs/jquery/1.7/jquery.min.js')
+  != js('http://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.1/jquery.min.js')
   != js('underscore.min')
   != js('bootstrap.min')
   != js('backbone.min')
