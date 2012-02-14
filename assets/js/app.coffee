@@ -4,13 +4,17 @@ $ ->
   Settings = Backbone.Model.extend
     defaults:
       id:       'settings'
-      username: 'private'
-      password: 'private'
+      username: ''
+      password: ''
 
     validation:
       username:
         required: true
+        minLength: 1
       password:
+        required: true
+        minLength: 1
+      releases:
         required: true
   
   # Collection
@@ -75,7 +79,10 @@ $ ->
 
   # Wires
   settingsCollection = new SettingsCollection
-  settingsView = new SettingsView model: settingsCollection.get settingsCollection.settingsId
+  model = settingsCollection.get settingsCollection.settingsId
+
+  settingsView = new SettingsView model: model
   $('#settings').bind 'click', ->
     settingsView.render()
     return false
+
