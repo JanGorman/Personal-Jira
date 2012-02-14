@@ -36,7 +36,7 @@ $ ->
     events:
       'click :button[type="submit"]': 'update'
       'click :button[type="cancel"]': 'toggle'
-      'keypress :input': 'update'
+      'keypress :input': 'submit'
 
     initialize: ->
       that = this
@@ -58,7 +58,17 @@ $ ->
       return this
       
     update: ->
-      console.log 'hi'
+      this.model.save(
+        username: this.$el.find('input[name="username"]').val()
+        password: this.$el.find('input[name="password"]').val()
+      )
+      if this.model.isValid()
+        this.model.save()
+        this.toggle()
+      
+    submit: (e) ->
+      if e.keyCode == 13
+        this.update()
       
     toggle: ->
       this.$el.modal 'toggle'
