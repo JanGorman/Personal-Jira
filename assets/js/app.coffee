@@ -48,7 +48,10 @@ $ ->
           (view, attr, error) ->
             that.$el.find("input[name='#{attr}']").parents('.control-group').addClass 'error'
       })
-      Backbone.ModelBinding.bind this
+      Backbone.ModelBinding.bind(this, {
+        text: 'name'
+        password: 'name'
+      })
 
     render: ->
       this.$el.modal()
