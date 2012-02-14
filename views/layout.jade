@@ -18,7 +18,7 @@ body
         div.nav-collapse
           ul.nav
             li
-              a(href='#') 
+              a(href='#', id='settings')
                 i.icon-cog.icon-white 
                 &nbsp;Settings
         form.navbar-search.pull-left
@@ -26,53 +26,34 @@ body
 
   .container
     != body
-
-  | <script type="text/template" id="filters-template">
-  | <div id="dialog_settings" class="modal hide fade">
-  |   <div class="modal-header">
-  |     <a class="close" data-dismiss="modal" >&times;</a>
-  |     <h3>Settings</h3>
-  |   </div>
-  |   <div class="modal-body">
-  |     <form method="get" accept-charset="utf-8">
-  |       <input type="hidden" name="id" id="id">
-  |       <fieldset>
-  |         <div class="control-group">
-  |           <label class="control-label" for="jira_project">Project</label>
-  |           <div class="controls">
-  |             <div class="input-prepend">
-  |               <span class="add-on"><i class="icon-list-alt"></i></span>
-  |               <input type="text" name="project" id="project">
-  |             </div>
-  |           </div>
-  |         </div>
-  |         <div class="control-group">
-  |           <label for="jira_user_name">Username</label>
-  |           <div class="controls">
-  |             <div class="input-prepend">
-  |               <span class="add-on"><i class="icon-user"></i></span>
-  |               <input type="text" name="username" id="username">
-  |             </div>
-  |           </div>
-  |         </div>
-  |         <div class="control-group">
-  |           <label for="jira_password">Password</label>
-  |           <div class="controls">
-  |             <div class="input-prepend">
-  |               <span class="add-on"><i class="icon-lock"></i></span>
-  |               <input type="password" name="password" id="password">
-  |             </div>
-  |           </div>
-  |         </div>
-  |       </fieldset>
-  |     </form>
-  |   </div>
-  |   <div class="modal-footer">
-  |     <button type="submit" class="btn btn-primary"><i class="icon-ok"></i> Save</button>
-  |     <button type="cancel" class="btn"><i class="icon-remove"></i> Cancel</button>
-  |   </div>
-  | </div>
-  | </script>
+    
+    div.modal.hide.fade#dialog_settings
+      div.modal-header
+        a.close(data-dismiss='modal')&times;
+        h3 Settings
+      div.modal-body
+        fieldset
+          div.control-group
+            label.control-label(for='username') Username
+            div.controls
+              div.input-prepend
+                span.add-on 
+                  i.icon-user
+                input(type='text', name='username')
+          div.control-group
+            label.control-label(for='password') Password
+            div.controls
+              div.input-prepend
+                span.add-on
+                  i.icon-lock
+                input(type='password', name='password')
+      div.modal-footer
+        button.btn.btn-primary(type='submit')
+          i.icon-ok
+          | Save
+        button.btn(type='cancel')
+          i.icon-remove
+          | Cancel
 
   != js('http://cdnjs.cloudflare.com/ajax/libs/jquery/1.7/jquery.min.js')
   != js('underscore.min')
