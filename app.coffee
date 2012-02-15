@@ -22,7 +22,7 @@ app.get '/releases', (req, resp) ->
       if !err
         args = (
           'in0': result.loginReturn
-          'in1': resp.query.project
+          'in1': req.query.project
         )
         client.getVersions args, (err, result) ->
           console.log result
