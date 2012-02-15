@@ -4,11 +4,15 @@ $ ->
   Settings = Backbone.Model.extend
     defaults:
       id:       'settings'
+      wsdl:     ''
       project:  ''
       username: ''
       password: ''
 
     validation:
+      wsdl:
+        required: true
+        minLength: 1
       project:
         required: true
         minLength: 1
@@ -22,7 +26,7 @@ $ ->
       #   required: true
     
     can_access_jira: ->
-      return project != '' and username != '' and password != ''
+      return this.wsdl != '' and this.project != '' and this.username != '' and this.password != ''
   
   # Collection
   SettingsCollection = Backbone.Collection.extend
@@ -91,7 +95,14 @@ $ ->
   
   # Poll jira for releases
   if model.can_access_jira
-    console.log 'hi'
+    access = (
+      wsdl:     model.get 'wsdl'
+      project:  model.get 'project'
+      username: model.get 'username'
+      password: model.get 'password'
+    )
+    $.get '/releases', access, (data) ->
+      console.log data
 
   settingsView = new SettingsView model: model
   $('#settings').bind 'click', ->
