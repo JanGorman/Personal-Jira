@@ -10,10 +10,7 @@
     , "stylus": "*"
     , "nib": "*"
     , "markdown": "*"
-    , "soap": "https://github.com/kaven276/node-soap"
-    , "fibers": ""
-    , "request": ""
-    , "node-expat": ""
+    , "soap": ""
   }
   , "scripts": {
     "test": "mocha"

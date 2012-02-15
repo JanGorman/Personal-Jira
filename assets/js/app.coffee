@@ -22,8 +22,6 @@ $ ->
       password:
         required: true
         minLength: 1
-      # releases:
-      #   required: true
     
     can_access_jira: ->
       return this.wsdl != '' and this.project != '' and this.username != '' and this.password != ''
@@ -92,17 +90,30 @@ $ ->
   # Wires
   settingsCollection = new SettingsCollection
   model = settingsCollection.get settingsCollection.settingsId
+
+  # Fail, another multiref
+  # access = (
+  #   wsdl:     model.get 'wsdl'
+  #   project:  model.get 'project'
+  #   username: model.get 'username'
+  #   password: model.get 'password'
+  #   release:  model.get 'release'
+  # )
+  # 
+  # $.get '/issues', access, (data) ->
+  #   console.log data
   
   # Poll jira for releases
-  if model.can_access_jira
-    access = (
-      wsdl:     model.get 'wsdl'
-      project:  model.get 'project'
-      username: model.get 'username'
-      password: model.get 'password'
-    )
-    $.get '/releases', access, (data) ->
-      console.log data
+  # Skip this for now, node soap libraries can't deal with multiref :(
+  # if model.can_access_jira
+  #   access = (
+  #     wsdl:     model.get 'wsdl'
+  #     project:  model.get 'project'
+  #     username: model.get 'username'
+  #     password: model.get 'password'
+  #   )
+  #   $.get '/releases', access, (data) ->
+  #     console.log data
 
   settingsView = new SettingsView model: model
   $('#settings').bind 'click', ->

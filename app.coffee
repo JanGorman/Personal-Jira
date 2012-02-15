@@ -6,7 +6,6 @@ soap = require 'soap'
 app = express.createServer()
 app.use assets()
 app.use '/img', express.static "#{__dirname}/assets/img"
-app.use '/js', express.static "#{__dirname}/assets/js"
 app.set 'view engine', 'jade'
 
 app.get '/', (req, resp) -> resp.render 'index'
@@ -29,5 +28,19 @@ app.get '/releases', (req, resp) ->
       
   # client.getVersions 
   resp.send 'hi ajax'
+  
+app.get '/issues', (req, resp) ->
+  soap.createClient req.query.wsdl, (err, client) ->
+    client.login ('in0': req.query.username, 'in1': req.query.password), (err, result) ->
+      if !err
+        args = (
+          'in0': result.loginReturn
+          'in1': "assignee = '#{req.query.username}' AND fixVersion = #{req.query.release}"
+          'in2': 100 
+        )
+        client.getIssuesFromJqlSearch args, (err, result) ->
+          console.log result
+      else
+        resp.send 'fail'
 
 app.listen process.env.VMC_APP_PORT or 3000, -> console.log 'Listening...'
