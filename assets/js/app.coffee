@@ -119,7 +119,6 @@ $ ->
     
     initialize: ->
       issues.bind 'add', this.addOne, this
-      issues.bind 'all', this.addAll, this
     
     render: ->
       this.$el.empty()
@@ -154,7 +153,7 @@ $ ->
         if data.length == 0
           $('.container h1').text 'Time for a beer, you\'re all done'
         else
-          $('.container h1').text 'This is what\'s cooking:<br>'
+          $('.container h1').text 'This is what\'s cooking:'
         _.each data, (item) ->
           issue = new Issue(
             url: "#{model.get 'url'}/browse/#{item.key}"
