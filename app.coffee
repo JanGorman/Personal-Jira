@@ -2,6 +2,8 @@ express = require 'express'
 stylus = require 'stylus'
 assets = require 'connect-assets'
 soap = require 'soap'
+util = require 'util'
+exec = require('child_process').exec
 
 app = express.createServer()
 app.use assets()
@@ -19,15 +21,11 @@ app.get '/releases', (req, resp) ->
   soap.createClient req.query.wsdl, (err, client) ->
     client.login args, (err, result) ->
       if !err
-        args = (
-          'in0': result.loginReturn
-          'in1': req.query.project
-        )
-        client.getVersions args, (err, result) ->
-          console.log result
-      
-  # client.getVersions 
-  resp.send 'hi ajax'
+        child = exec "python get_versions.py --token #{result.loginReturn} --project #{req.query.project} --wsdl #{req.query.wsdl}", (err, stdout, stderr) ->
+          if err == null
+            resp.send JSON.parse stdout
+          else
+            resp.send 'fail'
   
 app.get '/issues', (req, resp) ->
   soap.createClient req.query.wsdl, (err, client) ->

@@ -104,16 +104,15 @@ $ ->
   #   console.log data
   
   # Poll jira for releases
-  # Skip this for now, node soap libraries can't deal with multiref :(
-  # if model.can_access_jira
-  #   access = (
-  #     wsdl:     model.get 'wsdl'
-  #     project:  model.get 'project'
-  #     username: model.get 'username'
-  #     password: model.get 'password'
-  #   )
-  #   $.get '/releases', access, (data) ->
-  #     console.log data
+  if model.can_access_jira
+    access = (
+      wsdl:     model.get 'wsdl'
+      project:  model.get 'project'
+      username: model.get 'username'
+      password: model.get 'password'
+    )
+    $.get '/releases', access, (data) ->
+      console.log data
 
   settingsView = new SettingsView model: model
   $('#settings').bind 'click', ->
