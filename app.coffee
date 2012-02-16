@@ -23,7 +23,7 @@ app.get '/releases', (req, resp) ->
       if !err
         child = exec "python get_versions.py --token #{result.loginReturn} --project #{req.query.project} --wsdl #{req.query.wsdl}", (err, stdout, stderr) ->
           if err == null
-            resp.send JSON.parse stdout
+            resp.send stdout
           else
             resp.send 'fail'
   

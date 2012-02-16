@@ -111,8 +111,17 @@ $ ->
       username: model.get 'username'
       password: model.get 'password'
     )
-    $.get '/releases', access, (data) ->
-      console.log data
+    
+    $('#progress').modal(
+      keyboard: false
+    )
+    
+    $.getJSON '/releases', access, (data) ->
+      $('#progress').modal 'hide'
+      $('#release').typeahead(
+        source: data
+        items: 10
+      )
 
   settingsView = new SettingsView model: model
   $('#settings').bind 'click', ->
