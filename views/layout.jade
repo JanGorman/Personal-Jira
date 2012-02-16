@@ -35,6 +35,13 @@ body
       div.modal-body
         fieldset
           div.control-group
+            label.control-label(for='url') URL
+            div.controls
+              div.input-prepend
+                span.add-on
+                  i.icon-bookmark
+                input(type='text', name='url')
+          div.control-group
             label.control-label(for='wsdl') WSDL
             div.controls
               div.input-prepend
@@ -78,9 +85,9 @@ body
           div.bar(style='width: 100%')
 
   script(type='text/template', id='issue-template')
-    | <div>
-    | <%= key %> <%= summary %>
-    | </div>
+    | <p>
+    | <strong><a href="<%= url %>" target="_blank"><%= key %></a></strong>: <%= summary %>
+    | </p>
   != js('http://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.1/jquery.min.js')
   != js('underscore.min')
   != js('bootstrap.min')

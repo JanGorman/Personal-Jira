@@ -4,6 +4,7 @@ $ ->
   Settings = Backbone.Model.extend
     defaults:
       id:       'settings'
+      url:      ''
       wsdl:     ''
       project:  ''
       username: ''
@@ -27,6 +28,9 @@ $ ->
       return this.wsdl != '' and this.project != '' and this.username != '' and this.password != ''
       
   Issue = Backbone.Model.extend
+    
+    idAttribute: 'key'
+  
     defaults:
       key:      ''
       summary:  ''
@@ -49,6 +53,9 @@ $ ->
 
   IssueCollection = Backbone.Collection.extend
     model: Issue
+    
+    comparator: (issue)->
+      return issue.get 'key'
 
   # View
   SettingsView = Backbone.View.extend
@@ -117,8 +124,9 @@ $ ->
     render: ->
       this.$el.empty()
       
-    addOne: ->
+    addOne: (issue)->
       issue = new IssueView(model: issue)
+      $('#issues').append issue.render().el
       
     addAll: ->
       issues.each this.addOne
@@ -143,8 +151,13 @@ $ ->
       )
       $.getJSON '/issues', access, (data) ->
         $('#progress').modal 'hide'
+        if data.length == 0
+          $('.container h1').text 'Time for a beer, you\'re all done'
+        else
+          $('.container h1').text 'This is what\'s cooking:<br>'
         _.each data, (item) ->
           issue = new Issue(
+            url: "#{model.get 'url'}/browse/#{item.key}"
             key: item.key
             summary: item.summary
           )
