@@ -25,6 +25,11 @@ $ ->
     
     can_access_jira: ->
       return this.wsdl != '' and this.project != '' and this.username != '' and this.password != ''
+      
+  Issue = Backbone.Model.extend
+    defaults:
+      key:      ''
+      summary:  ''
   
   # Collection
   SettingsCollection = Backbone.Collection.extend
@@ -41,7 +46,10 @@ $ ->
         settings = new Settings
         this.add settings
         settings.save()
-        
+
+  IssueCollection = Backbone.Collection.extend
+    model: Issue
+
   # View
   SettingsView = Backbone.View.extend
     el: $('#dialog_settings')
@@ -87,6 +95,37 @@ $ ->
     toggle: ->
       this.$el.modal 'toggle'
 
+  IssueView = Backbone.View.extend
+    template: _.template($('#issue-template').html())
+  
+    initialize: ->
+      _.bindAll this
+      this.model.bind 'change', this.render
+  
+    render: ->
+      this.$el.html this.template this.model.toJSON()
+      return this
+  
+  IssuesView = Backbone.View.extend
+  
+    el: $('#issues')
+    
+    initialize: ->
+      issues.bind 'add', this.addOne, this
+      issues.bind 'all', this.addAll, this
+    
+    render: ->
+      this.$el.empty()
+      
+    addOne: ->
+      issue = new IssueView(model: issue)
+      
+    addAll: ->
+      issues.each this.addOne
+  
+  issues = new IssueCollection
+  issuesView = new IssuesView
+
   # Wires
   settingsCollection = new SettingsCollection
   model = settingsCollection.get settingsCollection.settingsId
@@ -104,6 +143,13 @@ $ ->
       )
       $.getJSON '/issues', access, (data) ->
         $('#progress').modal 'hide'
+        _.each data, (item) ->
+          issue = new Issue(
+            key: item.key
+            summary: item.summary
+          )
+          issues.add issue
+        
         console.log data
       
       return false
