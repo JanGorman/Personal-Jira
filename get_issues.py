@@ -10,6 +10,11 @@ parser.add_argument('--wsdl', help='wsdl location')
 args = parser.parse_args()
 
 client = Client(args.wsdl)
-issues = client.service.getIssuesFromJqlSearch(args.token, 'assignee = \'{}\' AND fixVersion = {}'.format(args.username, args.release), 100)
+raw = client.service.getIssuesFromJqlSearch(args.token, 'assignee = \'{}\' AND fixVersion = {}'.format(args.username, args.release), 100)
 
-print issues
+issues = []
+
+for issue in raw:
+    issues.append({'key': issue.key, 'summary': issue.summary})
+
+print json.dumps(issues)

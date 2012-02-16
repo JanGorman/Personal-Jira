@@ -25,7 +25,6 @@ app.get '/releases', (req, resp) ->
 app.get '/issues', (req, resp) ->
   soap.createClient req.query.wsdl, (err, client) ->
     client.login ('in0': req.query.username, 'in1': req.query.password), (err, result) ->
-      console.log result
       if !err
         child = exec "python get_issues.py --token #{result.loginReturn} --username #{req.query.username} --wsdl #{req.query.wsdl} --release #{req.query.release}", (err, stdout, stderr) ->
           if err == null
