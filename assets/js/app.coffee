@@ -91,17 +91,22 @@ $ ->
   settingsCollection = new SettingsCollection
   model = settingsCollection.get settingsCollection.settingsId
 
-  # Fail, another multiref
-  # access = (
-  #   wsdl:     model.get 'wsdl'
-  #   project:  model.get 'project'
-  #   username: model.get 'username'
-  #   password: model.get 'password'
-  #   release:  model.get 'release'
-  # )
-  # 
-  # $.get '/issues', access, (data) ->
-  #   console.log data
+  $('#release').bind 'keypress', (e) ->
+    if e.keyCode == 13 and model.can_access_jira
+      $('#progress').modal 'show'
+
+      access = (
+        wsdl:     model.get 'wsdl'
+        project:  model.get 'project'
+        username: model.get 'username'
+        password: model.get 'password'
+        release:  $('#release').val()
+      )
+      $.getJSON '/issues', access, (data) ->
+        $('#progress').modal 'hide'
+        console.log data
+      
+      return false
   
   # Poll jira for releases
   if model.can_access_jira
