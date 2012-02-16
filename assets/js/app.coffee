@@ -53,9 +53,6 @@ $ ->
 
   IssueCollection = Backbone.Collection.extend
     model: Issue
-    
-    comparator: (issue)->
-      return issue.get 'key'
 
   # View
   SettingsView = Backbone.View.extend
@@ -107,11 +104,15 @@ $ ->
   
     initialize: ->
       _.bindAll this
-      this.model.bind 'change', this.render
+      this.model.bind 'change', this.render, this
+      this.model.bind 'destroy', this.remove, this
   
     render: ->
       this.$el.html this.template this.model.toJSON()
       return this
+      
+    remove: ->
+      this.$el.remove();
   
   IssuesView = Backbone.View.extend
   
@@ -119,9 +120,9 @@ $ ->
     
     initialize: ->
       issues.bind 'add', this.addOne, this
-    
-    render: ->
-      this.$el.empty()
+      
+    clear: ->
+      this.$el.empty();
       
     addOne: (issue)->
       issue = new IssueView(model: issue)
@@ -151,19 +152,20 @@ $ ->
       $.getJSON '/issues', access, (data) ->
         $('#progress').modal 'hide'
         if data.length == 0
-          $('.container h1').text 'Time for a beer, you\'re all done'
+          $('.container h1').text 'Time for a beer, you\'re all done!'
         else
-          $('.container h1').text 'This is what\'s cooking:'
+          $('.container h1').text 'Still something left to do:'
+
+        issuesView.clear()
         _.each data, (item) ->
           issue = new Issue(
             url: "#{model.get 'url'}/browse/#{item.key}"
             key: item.key
             summary: item.summary
           )
+          issues.remove issue
           issues.add issue
-        
-        console.log data
-      
+
       return false
   
   # Poll jira for releases
