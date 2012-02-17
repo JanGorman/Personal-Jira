@@ -25,7 +25,7 @@ $ ->
         minLength: 1
     
     can_access_jira: ->
-      return this.wsdl != '' and this.project != '' and this.username != '' and this.password != ''
+      return this.get('wsdl') and this.get('project') and this.get('username') and this.get('password')
       
   Issue = Backbone.Model.extend
     
@@ -169,7 +169,7 @@ $ ->
       return false
   
   # Poll jira for releases
-  if model.can_access_jira
+  if model.can_access_jira()
     access = (
       wsdl:     model.get 'wsdl'
       project:  model.get 'project'
