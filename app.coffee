@@ -32,4 +32,6 @@ app.get '/issues', (req, resp) ->
           else
             resp.send 'fail'
 
-app.listen process.env.VMC_APP_PORT or 3000, -> console.log 'Listening...'
+app.listen process.env.VMC_APP_PORT or 3000, ->
+  console.log 'Listening...'
+  console.log 'Goto: http://localhost:3000'
