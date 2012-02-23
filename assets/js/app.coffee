@@ -84,6 +84,8 @@ $ ->
       
     update: ->
       this.model.save(
+        url:      this.$el.find('input[name="url"]').val()
+        wsdl:     this.$el.find('input[name="wsdl"]').val()
         project:  this.$el.find('input[name="project"]').val()
         username: this.$el.find('input[name="username"]').val()
         password: this.$el.find('input[name="password"]').val()
