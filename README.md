@@ -10,7 +10,7 @@ First:
     
 to resolve node.js dependencies. From then on just cd into the directory and punch in:
 
-    node server.js
+    foreman start
 
 ## Why
 
